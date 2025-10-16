@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Bar Chart</title>
+    <style>
+        body {
+            background-color: #222222;
+            font-family: Arial, sans-serif;
+            color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chart-container {
+            background-color: #2c2c2c;
+            width: 80%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-gap: 10px;
+            align-items: end;
+            height: 300px;
+        }
+
+        .bar {
+            background-color: #f5e0b7;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bar:hover {
+            background-color: #d4c19b;
+        }
+
+        .week-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .week-label {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .y-axis-labels {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .y-axis-label {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .y-axis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 300px;
+            position: absolute;
+            left: 0;
+            top: 20px;
+        }
+
+        .grid-line {
+            background-color: #444444;
+            height: 1px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <div class="y-axis">
+            <div class="y-axis-label">10</div>
+            <div class="grid-line"></div>
+            <div class="y-axis-label">8</div>
+            <div class="grid-line"></div>
+            <div class="y-axis-label">6</div>
+            <div class="grid-line"></div>
+            <div class="y-axis-label">4</div>
+            <div class="grid-line"></div>
+            <div class="y-axis-label">2</div>
+            <div class="grid-line"></div>
+            <div class="y-axis-label">0</div>
+        </div>
+        <div class="chart">
+            <!-- Dynamically filled bars -->
+            <div class="bar" id="bar-1"></div>
+            <div class="bar" id="bar-2"></div>
+            <div class="bar" id="bar-3"></div>
+            <div class="bar" id="bar-4"></div>
+            <div class="bar" id="bar-5"></div>
+            <div class="bar" id="bar-6"></div>
+            <div class="bar" id="bar-7"></div>
+        </div>
+        <div class="week-labels">
+            <div class="week-label">Week 1</div>
+            <div class="week-label">Week 2</div>
+            <div class="week-label">Week 3</div>
+            <div class="week-label">Week 4</div>
+            <div class="week-label">Week 5</div>
+            <div class="week-label">Week 6</div>
+            <div class="week-label">Week 7</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the workout data dynamically from Adalo
+        const workoutData = [
+            {{week_1_workout_count}}, 
+            {{week_2_workout_count}}, 
+            {{week_3_workout_count}}, 
+            {{week_4_workout_count}}, 
+            {{week_5_workout_count}}, 
+            {{week_6_workout_count}}, 
+            {{week_7_workout_count}}
+        ];
+
+        const bars = document.querySelectorAll('.bar');
+
+        // Loop through the bars and set their heights based on the workout data
+        bars.forEach((bar, index) => {
+            const heightPercentage = (workoutData[index] / 10) * 100; // Assuming max is 10
+            bar.style.height = `${heightPercentage}%`;
+            bar.setAttribute('title', `Week ${index + 1}: ${workoutData[index]} Workouts`);
+        });
+    </script>
+</body>
+</html>
